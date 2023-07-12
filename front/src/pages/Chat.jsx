@@ -15,27 +15,22 @@ function Chat() {
         async function fetchCurrentUSer() {
             const userCurrent = await JSON.parse(localStorage.getItem("chat-app-user"))
             setCurrentUser(userCurrent)
-            console.log('current user 2', currentUser)
-            /* return await JSON.parse(localStorage.getItem("chat-app-user"))*/
         }
-        if(localStorage.getItem("chat-app-user")) {
-            setCurrentUser(JSON.parse(localStorage.getItem("chat-app-user")))
-            console.log('current user 1', currentUser)
+        if(!localStorage.getItem("chat-app-user")) {
+            navigate('/login')
         } else {
             fetchCurrentUSer()
-            console.log('current user 3', currentUser)
         }
     }, [])
 
     useEffect(() => {
-        async function fetchCurrentUSer() {
-            return await axios.get(`${allUsersRoute}/${currentUser._id}`)
+        async function fetchCurrentUSerById() {
+            const userCurrentId = await axios.get(`${allUsersRoute}/${currentUser._id}`)
+            setContacts(userCurrentId.data.users)
         }
         if(currentUser) {
             if(currentUser.isAvatarImageSet) {
-                const data = fetchCurrentUSer()
-                console.log('data', data)
-                setContacts(data.data)
+                fetchCurrentUSerById()
             } else {
                 navigate('/setAvatar')
             }
