@@ -6,6 +6,6 @@ const router = express.Router();
 router.post("/login", login);
 router.post("/register", register);
 router.post("/setavatar/:id", setAvatar);
-router.post("/getallusers/:id", getAllUsers);
+router.get("/getallusers/:id", getAllUsers);
 
 export default router;
