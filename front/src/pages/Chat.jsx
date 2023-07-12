@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { allUsersRoute } from '../utils/APIRoutes'
 import Contacts from '../components/Contacts'
+// import { set } from 'mongoose'
 
 function Chat() {
     const navigate = useNavigate()
@@ -12,13 +13,17 @@ function Chat() {
 
     useEffect(() => {
         async function fetchCurrentUSer() {
-            return await JSON.parse(localStorage.getItem("chat-app-user"))
+            const userCurrent = await JSON.parse(localStorage.getItem("chat-app-user"))
+            setCurrentUser(userCurrent)
+            console.log('current user 2', currentUser)
+            /* return await JSON.parse(localStorage.getItem("chat-app-user"))*/
         }
         if(localStorage.getItem("chat-app-user")) {
             setCurrentUser(JSON.parse(localStorage.getItem("chat-app-user")))
+            console.log('current user 1', currentUser)
         } else {
-            setCurrentUser(fetchCurrentUSer())
-            console.log('current user', currentUser)
+            fetchCurrentUSer()
+            console.log('current user 3', currentUser)
         }
     }, [])
 
