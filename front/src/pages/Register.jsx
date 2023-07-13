@@ -30,7 +30,7 @@ function Register() {
     const handleSubmit = async (event) => {
         event.preventDefault()
         if(handleValidation()) {
-            // console.log('user', registerRoute)
+            console.log('user register', registerRoute)
             const {username, email, password} = user
             const {data} = await axios.post(registerRoute, 
             {
@@ -67,7 +67,7 @@ function Register() {
     }
     const handleChange = (event) => {
         setUser({...user, [event.target.name]: event.target.value})
-        console.log(event.target.value)
+        // console.log(event.target.value)
     }
     return (<>
         <FormContainer>
