@@ -68,6 +68,7 @@ const Container = styled.div`
                 font-size: 1.5rem;
                 color: #ffff00c8;
                 cursor: pointer;
+                margin: -9px;
             }
             .EmojiPickerReact {
                 position: absolute;
