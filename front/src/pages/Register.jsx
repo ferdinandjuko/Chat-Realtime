@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
-import Logo from '../assets/logo.svg'
+import Logo from '../assets/logo.png'
 import { ToastContainer, toast } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css"
 import axios from 'axios'
@@ -74,7 +74,7 @@ function Register() {
             <form onSubmit={(event)=>handleSubmit(event)}>
                 <div className="brand">
                     <img src={Logo} alt="Logo" />
-                    <h1>Snappy</h1>
+                    <h1>Ilo</h1>
                 </div>
                 <input type="text" name="username" placeholder='Username' id="" onChange={(e)=>handleChange(e)} />
                 <input type="email" name="email" placeholder='Adresse eamil' id="" onChange={(e)=>handleChange(e)} />

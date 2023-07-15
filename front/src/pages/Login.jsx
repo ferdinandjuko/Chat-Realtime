@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
-import Logo from '../assets/logo.svg'
+import Logo from '../assets/logo.png'
 import { ToastContainer, toast } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css"
 import axios from 'axios'
@@ -67,7 +67,7 @@ function Login() {
             <form onSubmit={(event)=>handleSubmit(event)}>
                 <div className="brand">
                     <img src={Logo} alt="Logo" />
-                    <h1>Snappy</h1>
+                    <h1>ILO</h1>
                 </div>
                 <input type="text" name="username" placeholder='Username' id="" onChange={(e)=>handleChange(e)} />
                 <input type="password" name="password" placeholder='Mot de passe' id="" onChange={(e)=>handleChange(e)} />
