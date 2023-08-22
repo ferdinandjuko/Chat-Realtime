@@ -5,6 +5,8 @@ This repository is created to a mini-project of chat realtime
 
 The back folder is for node.js
 
+Database used is **mongodb**
+
 Create a .env file inside back folder that containe this :
 ```
 PORT=5000
