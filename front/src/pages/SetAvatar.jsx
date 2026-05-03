@@ -6,16 +6,16 @@ import loader from '../assets/loader.gif'
 import "react-toastify/dist/ReactToastify.css"
 import axios from 'axios'
 import { setAvatarRoute } from '../utils/APIRoutes';
-import { Buffer } from 'buffer'
-import { async } from 'q'
-// import { setAvatar } from '../../../back/controllers/userController'
+import multiavatar from '@multiavatar/multiavatar/esm';
+import { Buffer } from 'buffer';
 
-export default function SetAvatar() {
-    const api = "https://api.multiavatar.com/45678945"
+export default async function SetAvatar() {
     const navigate = useNavigate()
+
     const [avatars, setAvatars] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [selectedAvatar, setSelectedAvatar] = useState(undefined)
+
     const toastifyError = {
         position: 'bottom-right',
         autoClose: 8000,
@@ -24,75 +24,112 @@ export default function SetAvatar() {
         theme: 'dark'
     }
 
-    const setProfilePicture = async () => {
-        if(selectedAvatar === undefined) {
-            toast.error('Please select an avatar', toastifyError)
-        } else {
-            const user = await JSON.parse(localStorage.getItem("chat-app-user"))
-            console.log('user', user._id, user)
-            const {data} = await axios.post(`${setAvatarRoute}/${user._id}`, {
-                image: avatars[selectedAvatar],
-            })
+    useEffect(() => {
+        if (!localStorage.getItem("chat-app-user")) {
+            navigate('/login');
+        }
+    }, [navigate]);
 
-            if(data.isSet) {
+    useEffect(() => {
+        const generateAvatars = () => {
+            const generatedAvatars = [];
+
+            for (let i = 0; i < 4; i++) {
+                const seed = `${Date.now()}-${i}-${Math.random()}`;
+
+                const svg = multiavatar(seed);
+
+                const base64 = Buffer
+                    .from(svg, 'utf8')
+                    .toString('base64');
+
+                generatedAvatars.push(base64);
+            }
+
+            setAvatars(generatedAvatars);
+            setIsLoading(false);
+        };
+
+        generateAvatars();
+    }, []);
+
+    const setProfilePicture = async () => {
+        if (selectedAvatar === undefined) {
+            toast.error(
+                'Please select an avatar',
+                toastifyError
+            );
+            return;
+        }
+
+        try {
+            const user = JSON.parse(
+                localStorage.getItem("chat-app-user")
+            );
+            console.log('user', user._id, user)
+
+            const { data } = await axios.post(
+                `${setAvatarRoute}/${user._id}`,
+                {
+                    image: avatars[selectedAvatar],
+                }
+            );
+
+            if (data.isSet) {
                 user.isAvatarImageSet = true
-                user.avatarImge = data.image
-                localStorage.setItem("chat-app-user", JSON.stringify(user))
+                user.avatarImage = data.image
+
+                localStorage.setItem(
+                    "chat-app-user",
+                    JSON.stringify(user)
+                );
+
                 navigate('/')
             } else {
-                toast.error('Error setting the avatar', toastifyError)
-            }
-        }
-    };
-    useEffect(() => {
-        if(!localStorage.getItem("chat-app-user")) {
-            navigate('/login')
-        }
-    }, [])
-    useEffect(() => {
-        async function setAvatarList() {
-            const data = []
-            for(let i=0; i<4; i++) {
-                const image = await axios.get(
-                    `${api}/${Math.round(Math.random() * 1000)}`
+                toast.error(
+                    'Error setting the avatar',
+                    toastifyError
                 );
-                /*const buffer = Buffer.from(image.data, 'base64')
-                data.push(buffer.toString('base64'))*/
-                const buffer = new Buffer(image.data)
-                data.push(buffer.toString('base64'))
-                setAvatars(data)
-                setIsLoading(false)
             }
+        } catch (error) {
+            console.error(
+                'Set avatar error:',
+                error
+            );
 
+            toast.error(
+                'Unable to save the avatar',
+                toastifyError
+            );
         }
-        setAvatarList()
-    }, [api])
+    }
+
     return (
         <>
-        {
-            isLoading ? (<Container>
-                <img src={loader} alt="loader" className='loader' />
-            </Container>) : (
+            {isLoading ? (
+                <Container>
+                    <img src={loader} alt="loader" className='loader' />
+                </Container>
+            ) : (
 
                 <Container>
-                <div className="title-container">
-                    <h1>Pick an avatar as your profile picture</h1>
-                </div>
-                <div className="avatars">
-                    {
-                        avatars.map((avatar, index) => {
-                            return (<div key={index} className={`avatar ${
-                                selectedAvatar === index ? "selected": ""}`}>
-                                    <img src={`data:image/svg+xml;base64,${avatar}`} alt="avatar" 
-                                        onClick={() => setSelectedAvatar(index)}
-                                    />
-                                </div>)
+                    <div className="title-container">
+                        <h1>Pick an avatar as your profile picture</h1>
+                    </div>
+
+                    <div className="avatars">
+                        {avatars.map((avatar, index) => {
+                            return (<div key={index} className={`avatar ${selectedAvatar === index ? "selected" : ""}`}>
+                                <img src={`data:image/svg+xml;base64,${avatar}`} alt="avatar"
+                                    onClick={() => setSelectedAvatar(index)}
+                                />
+                            </div>)
                         })
-                    }
-                </div>
-                <button onClick={()=>setProfilePicture()} className="submit">Set as profile picture</button>
-            </Container>
-        )}
+                        }
+                    </div>
+                    <button onClick={() => setProfilePicture()} className="submit">Set as profile picture</button>
+                </Container>
+            )}
             <ToastContainer />
         </>
     )
