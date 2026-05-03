@@ -23,63 +23,110 @@ function Register() {
         theme: 'dark'
     }
     useEffect(() => {
-        if(localStorage.getItem("chat-app-user")) {
+        if (localStorage.getItem("chat-app-user")) {
             navigate('/')
         }
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault()
-        if(handleValidation()) {
+
+        if (!handleValidation()) {
+            return;
+        }
+
+
+        const { username, email, password } = user
+
+        try {
             console.log('user register', registerRoute)
-            const {username, email, password} = user
-            const {data} = await axios.post(registerRoute, 
-            {
+
+            const response = await axios.post(registerRoute, {
                 username,
                 email,
                 password
-            }).catch(err=>console.log(err));
-            if(data.status===false) {
-                toast.error(data.message, toastifyError)
+            });
+
+            const { data } = response;
+
+            if (data.status === false) {
+                toast.error(data.message, toastifyError);
+                return;
             }
-            if(data.status===true) {
-                localStorage.setItem("chat-app-user", JSON.stringify(data.user))
-                navigate('/')
+
+            if (data.status === true) {
+                localStorage.setItem(
+                    "chat-app-user",
+                    JSON.stringify(data.user)
+                );
+
+                navigate('/');
             }
+        } catch (error) {
+            console.error("Registration error:", error);
+
+            toast.error(
+                error.response?.data?.message ||
+                "Unable to register. Please check the backend connection.",
+                toastifyError
+            );
         }
-        
     }
     const handleValidation = () => {
-        const {username, email, password, confirmPassword} = user
-        if(password !== confirmPassword) {
-            toast.error('Password and the confirm password should be the same', toastifyError)
-            return false
-        } else if(username < 3) {
-            toast.error('Username should be at least 3 characters', toastifyError)
-            return false
-        } else if(password < 6) {
-            toast.error('Password should be at least 6 characters', toastifyError)
-            return false
-        } else if(!email.includes('@') && !email.includes('.') && email==='') {
-            toast.error('Invalid email', toastifyError)
+        const {
+            username,
+            email,
+            password,
+            confirmPassword
+        } = user;
+
+        if (password !== confirmPassword) {
+            toast.error(
+                'Password and the confirm password should be the same'
+                , toastifyError
+            );
+            return false;
+        }
+        if (username.trim().length < 3) {
+            toast.error(
+                'Username should be at least 3 characters',
+                toastifyError
+            );
             return false
         }
-        return true
+        if (password.length < 6) {
+            toast.error(
+                'Password should be at least 6 characters',
+                toastifyError
+            );
+            return false
+        }
+        const emailRegex = /^\S+@\S+\.\S+$/;
+
+        if (!emailRegex.test(email)) {
+            toast.error(
+                'Invalid email address',
+                toastifyError
+            );
+            return false;
+        }
+
+        return true;
     }
     const handleChange = (event) => {
-        setUser({...user, [event.target.name]: event.target.value})
+        setUser({ ...user, [event.target.name]: event.target.value })
         // console.log(event.target.value)
     }
     return (<>
         <FormContainer>
-            <form onSubmit={(event)=>handleSubmit(event)}>
+            <form onSubmit={(event) => handleSubmit(event)}>
                 <div className="brand">
                     <img src={Logo} alt="Logo" />
                     <h1>Ilo</h1>
                 </div>
-                <input type="text" name="username" placeholder='Username' id="" onChange={(e)=>handleChange(e)} />
-                <input type="email" name="email" placeholder='Adresse eamil' id="" onChange={(e)=>handleChange(e)} />
-                <input type="password" name="password" placeholder='Mot de passe' id="" onChange={(e)=>handleChange(e)} />
-                <input type="password" name="confirmPassword" placeholder='Confirmer le mot de passe' id="" onChange={(e)=>handleChange(e)} />
+                <input type="text" name="username" placeholder='Username' id="" onChange={(e) => handleChange(e)} />
+                <input type="email" name="email" placeholder='Adresse eamil' id="" onChange={(e) => handleChange(e)} />
+                <input type="password" name="password" placeholder='Mot de passe' id="" onChange={(e) => handleChange(e)} />
+                <input type="password" name="confirmPassword" placeholder='Confirmer le mot de passe' id="" onChange={(e) => handleChange(e)} />
                 <button type="submit">Creer User</button>
                 <span>Already have an acount ? <Link to="/login">Login</Link></span>
             </form>
