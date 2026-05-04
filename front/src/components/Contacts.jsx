@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Logo from '../assets/logo.png'
 
-export default function Contacts({contacts, currentUser, changeChat}) {
+export default function Contacts({ contacts, currentUser, changeChat }) {
     const [currentUsername, setCurrentUsername] = useState(undefined)
     const [currentUserImage, setCurrentUserImage] = useState(undefined)
     const [currentSelected, setCurrentSelected] = useState(undefined)
 
     useEffect(() => {
-        if(currentUser) {
+        if (currentUser) {
             setCurrentUsername(currentUser.username)
             setCurrentUserImage(currentUser.avatarImage)
         }
@@ -25,20 +25,18 @@ export default function Contacts({contacts, currentUser, changeChat}) {
                 <Container>
                     <div className="brand">
                         <img src={Logo} alt="logo" />
-                        <h3>ILO</h3>
                     </div>
                     <div className="contacts">
                         {
                             contacts.map((contact, index) => {
                                 return (
-                                    <div className={`contact ${
-                                        index === currentSelected ? "selected" : ""
-                                    }`} key={index}
-                                    onClick={()=>changeCurrentChat(index, contact)} >
+                                    <div className={`contact ${index === currentSelected ? "selected" : ""
+                                        }`} key={index}
+                                        onClick={() => changeCurrentChat(index, contact)} >
                                         <div className="avatar">
                                             <img
-                                                src={`data:image/svg+xml;base64,${contact.avatarImage}`} 
-                                                alt="avatar" 
+                                                src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+                                                alt="avatar"
                                             />
                                         </div>
                                         <div className="username">
@@ -51,9 +49,9 @@ export default function Contacts({contacts, currentUser, changeChat}) {
                     </div>
                     <div className="current-user">
                         <div className="avatar">
-                            <img 
-                                src={`data:image/svg+xml;base64,${currentUserImage}`} 
-                                alt="avatar" 
+                            <img
+                                src={`data:image/svg+xml;base64,${currentUserImage}`}
+                                alt="avatar"
                             />
                         </div>
                         <div className="username">
@@ -65,7 +63,7 @@ export default function Contacts({contacts, currentUser, changeChat}) {
         }
     </>)
 }
-    const Container = styled.div`
+const Container = styled.div`
         display: grid;
         grid-template-rows: 10% 75% 15%;
         overflow: hidden;
@@ -76,11 +74,7 @@ export default function Contacts({contacts, currentUser, changeChat}) {
             align-items: center;
             gap: 1rem;
             img {
-                height: 2rem;
-            }
-            h3 {
-                color: #fff;
-                text-transform: uppercase;
+                height: 5rem;
             }
         }
         .contacts {
