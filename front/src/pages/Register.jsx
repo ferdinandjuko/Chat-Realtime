@@ -121,7 +121,6 @@ function Register() {
             <form onSubmit={(event) => handleSubmit(event)}>
                 <div className="brand">
                     <img src={Logo} alt="Logo" />
-                    <h1>Ilo</h1>
                 </div>
                 <input type="text" name="username" placeholder='Username' id="" onChange={(e) => handleChange(e)} />
                 <input type="email" name="email" placeholder='Adresse eamil' id="" onChange={(e) => handleChange(e)} />
@@ -150,11 +149,7 @@ const FormContainer = styled.div`
         gap: 1rem;
         justify-content: center;
         img {
-            height: 5rem;
-        }
-        h1 {
-            color: #fff;
-            text-transform: uppercase;
+            height: 8rem;
         }
     }
     form {
