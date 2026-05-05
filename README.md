@@ -204,54 +204,6 @@ http://localhost:3000
 
 ---
 
-## 🛠️ Development Notes
-
-### React/Webpack cache
-
-If Create React App reports an unexpected source-map or React Refresh error even though dependencies are correctly installed, clear the development cache and restart:
-
-```text
-front/node_modules/.cache
-```
-
-Then run:
-
-```bash
-npm start
-```
-
-### Backend URL
-
-If the frontend cannot reach the API, verify:
-
-```env
-REACT_APP_URL_BACK=http://localhost:5000
-```
-
-and restart the React development server after changing `.env`.
-
----
-
-## 🧭 What this project demonstrates
-
-ChatRealTime is intentionally more than a UI exercise. It demonstrates the complete flow of a small real-time application:
-
-```text
-React
-   ↓
-REST API / Socket.IO
-   ↓
-Express
-   ↓
-Mongoose
-   ↓
-MongoDB
-```
-
-It covers both request/response communication and persistent real-time connections, making it a useful project for practicing full-stack JavaScript architecture.
-
----
-
 ## 🔗 Repository
 
 **GitHub:** [github.com/ferdinandjuko/Chat-Realtime](https://github.com/ferdinandjuko/Chat-Realtime)
@@ -265,15 +217,40 @@ git clone https://github.com/ferdinandjuko/Chat-Realtime.git
 ---
 
 ## 👨‍💻 Author
-
 <div align="center">
 
 **Ferdinand Juko**
 
 Backend Software Developer · PHP/Symfony · JavaScript/React
 
-[![GitHub](https://img.shields.io/badge/GitHub-ferdinandjuko-181717?style=for-the-badge&logo=github)](https://github.com/ferdinandjuko)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-ferdinandjuko-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/ferdinandjuko)
+<h4>You can find me on 💬</h4>
+
+<p>
+
+<a href="mailto:rferdinandjuko@gmail.com" target="blank">
+<img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/gmail.svg"
+      alt="gmail"
+      height="25"
+      width="25" />
+</a>
+&emsp;
+<a href="https://github.com/ferdinandjuko" target="blank">
+<img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/github.svg"
+      alt="github"
+      height="25"
+      width="25" />
+</a>
+&emsp;
+<a href="https://www.linkedin.com/in/ferdinandjuko" target="blank">
+<img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/linkedin.svg"
+      alt="linkedin"
+      height="25"
+      width="25" />
+</a>
+
+</p>
+
+<h5>Thanks for visiting my project 😉</h5>
 
 </div>
 
