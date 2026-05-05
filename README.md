@@ -65,20 +65,6 @@ The project is also a practical playground for working with:
 <img src="https://img.shields.io/badge/Styled_Components-6.0-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white" />
 </p>
 
-**Main frontend packages**
-
-- React `18.2.0`
-- React DOM `18.2.0`
-- React Router DOM `6.14.1`
-- Axios `1.4.0`
-- Socket.IO Client `4.7.1`
-- Styled Components `6.0.3`
-- React Toastify `9.1.3`
-- Emoji Picker React `4.4.9`
-- React Icons `4.10.1`
-- Multiavatar `1.0.7`
-- UUID `9.0.0`
-
 ### Backend
 
 <p>
@@ -87,16 +73,6 @@ The project is also a practical playground for working with:
 <img src="https://img.shields.io/badge/MongoDB-Mongoose-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
 <img src="https://img.shields.io/badge/Socket.IO-4.6-010101?style=for-the-badge&logo=socket.io&logoColor=white" />
 </p>
-
-**Main backend packages**
-
-- Express `4.18.2`
-- Mongoose `7.2.2`
-- Socket.IO `4.6.2`
-- bcrypt `5.1.0`
-- CORS `2.8.5`
-- dotenv `16.1.4`
-- nodemon `2.0.22`
 
 ---
 
@@ -152,32 +128,6 @@ Chat-Realtime/
     │   └── ...
     ├── package.json
     └── .env
-```
-
-The frontend API routes are centralized in:
-
-```text
-front/src/utils/APIRoutes.js
-```
-
----
-
-## 🔌 API Routes used by the frontend
-
-```js
-/api/auth/register
-/api/auth/login
-/api/auth/setAvatar
-/api/auth/getallUsers
-
-/api/messages/addmsg
-/api/messages/getmsg
-```
-
-The frontend builds these URLs from:
-
-```env
-REACT_APP_URL_BACK=http://localhost:5000
 ```
 
 ---
@@ -251,61 +201,6 @@ The React application starts on:
 ```text
 http://localhost:3000
 ```
-
----
-
-## 📜 Available Scripts
-
-### Backend
-
-| Script | Command | Description |
-|---|---|---|
-| Start | `npm start` | Starts the backend with Nodemon |
-| Test | `npm test` | Placeholder test script |
-
-### Frontend
-
-| Script | Command | Description |
-|---|---|---|
-| Start | `npm start` | Starts the React development server |
-| Build | `npm run build` | Creates a production build |
-| Test | `npm test` | Runs the React test runner |
-| Eject | `npm run eject` | Ejects Create React App configuration |
-
----
-
-## 🔄 Real-Time Messaging Flow
-
-```text
-User A
-  │
-  │ sends message
-  ▼
-React Client
-  │
-  ├──── REST ─────► Express API ─────► MongoDB
-  │
-  └── Socket.IO ──► Socket.IO Server
-                           │
-                           ▼
-                       User B
-```
-
-REST endpoints handle application data and persistence, while Socket.IO provides the live communication layer between connected users.
-
----
-
-## 👤 Avatar Generation
-
-The project uses:
-
-```text
-@multiavatar/multiavatar
-```
-
-Avatars are generated locally on the frontend and then stored through the backend avatar endpoint.
-
-This avoids depending on the old remote Multiavatar API and removes the browser CORS dependency for avatar generation.
 
 ---
 
