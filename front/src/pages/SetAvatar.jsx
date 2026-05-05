@@ -9,7 +9,7 @@ import { setAvatarRoute } from '../utils/APIRoutes';
 import multiavatar from '@multiavatar/multiavatar/esm';
 import { Buffer } from 'buffer';
 
-export default async function SetAvatar() {
+export default function SetAvatar() {
     const navigate = useNavigate()
 
     const [avatars, setAvatars] = useState([])
