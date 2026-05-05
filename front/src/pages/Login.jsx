@@ -22,55 +22,54 @@ function Login() {
     }
 
     useEffect(() => {
-        if(localStorage.getItem("chat-app-user")) {
+        if (localStorage.getItem("chat-app-user")) {
             navigate('/')
         }
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault()
-        if(handleValidation()) {
+        if (handleValidation()) {
             // console.log('user', registerRoute)
-            const {username, password} = user
-            const {data} = await axios.post(loginRoute, 
-            {
-                username,
-                password
-            }).catch(err=>console.log(err));
-            if(data.status===false) {
+            const { username, password } = user
+            const { data } = await axios.post(loginRoute,
+                {
+                    username,
+                    password
+                }).catch(err => console.log(err));
+            if (data.status === false) {
                 toast.error(data.msg, toastifyError)
             }
-            if(data.status===true) {
+            if (data.status === true) {
                 console.log(data.status)
                 localStorage.setItem("chat-app-user", JSON.stringify(data.user))
                 navigate('/')
             }
         }
-        
+
     }
     const handleValidation = () => {
-        const {username, password} = user
-        if(password === "") {
+        const { username, password } = user
+        if (password === "") {
             toast.error('Email and Password is required', toastifyError)
             return false
-        } else if(username.length === "") {
+        } else if (username.length === "") {
             toast.error('Email and Password is required', toastifyError)
             return false
         }
         return true
     }
     const handleChange = (event) => {
-        setUser({...user, [event.target.name]: event.target.value})
+        setUser({ ...user, [event.target.name]: event.target.value })
         console.log(event.target.value)
     }
     return (<>
         <FormContainer>
-            <form onSubmit={(event)=>handleSubmit(event)}>
+            <form onSubmit={(event) => handleSubmit(event)}>
                 <div className="brand">
                     <img src={Logo} alt="Logo" />
-                    <h1>ILO</h1>
                 </div>
-                <input type="text" name="username" placeholder='Username' id="" onChange={(e)=>handleChange(e)} />
-                <input type="password" name="password" placeholder='Mot de passe' id="" onChange={(e)=>handleChange(e)} />
+                <input type="text" name="username" placeholder='Username' id="" onChange={(e) => handleChange(e)} />
+                <input type="password" name="password" placeholder='Mot de passe' id="" onChange={(e) => handleChange(e)} />
                 <button type="submit">Login In</button>
                 <span>Don't have an acount ? <Link to="/register">Register</Link></span>
             </form>
@@ -91,14 +90,9 @@ const FormContainer = styled.div`
     .brand {
         display: flex;
         align-items: center;
-        gap: 1rem;
         justify-content: center;
         img {
-            height: 5rem;
-        }
-        h1 {
-            color: #fff;
-            text-transform: uppercase;
+            height: 8rem;
         }
     }
     form {
