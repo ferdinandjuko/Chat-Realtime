@@ -227,26 +227,9 @@ Backend Software Developer · PHP/Symfony · JavaScript/React
 
 <p>
 
-<a href="mailto:rferdinandjuko@gmail.com" target="blank">
-<img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/gmail.svg"
-      alt="gmail"
-      height="25"
-      width="25" />
-</a>
-&emsp;
-<a href="https://github.com/ferdinandjuko" target="blank">
-<img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/github.svg"
-      alt="github"
-      height="25"
-      width="25" />
-</a>
-&emsp;
-<a href="https://www.linkedin.com/in/ferdinandjuko" target="blank">
-<img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/linkedin.svg"
-      alt="linkedin"
-      height="25"
-      width="25" />
-</a>
+<a href="mailto:rferdinandjuko@gmail.com" target="blank"><img src="https://img.icons8.com/color/48/gmail-new.png" alt="gmail" width="30" height="30" /></a>&ensp;&ensp;
+<a href="https://github.com/ferdinandjuko" target="blank"><img src="https://img.icons8.com/ios-glyphs/30/FFFFFF/github.png" alt="github" width="30" height="30" /></a>&ensp;&ensp;
+<a href="https://www.linkedin.com/in/ferdinandjuko" target="blank"><img src="https://img.icons8.com/color/48/linkedin.png" alt="linkedin" width="30" height="30" /></a>
 
 </p>
 
