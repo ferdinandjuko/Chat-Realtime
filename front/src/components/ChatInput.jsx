@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Picker from "emoji-picker-react";
 import { IoMdSend } from "react-icons/io";
@@ -8,40 +8,85 @@ export default function ChatInput({ handleSendMsg }) {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const [msg, setMsg] = useState("")
 
-    const handleEmojiPickerHideShow = () => {
-        setShowEmojiPicker(!showEmojiPicker)
-    }
+    const emojiRef = useRef(null);
 
-    const handleEmojiClick = (event) => {
-        let  message = msg
-        message += event.emoji
-        setMsg(message)
-    }
+    const handleEmojiPickerHideShow = () => {
+        setShowEmojiPicker((prev) => !prev);
+    };
+
+    const handleEmojiClick = (emojiData) => {
+        setMsg((prev) => prev + emojiData.emoji);
+    };
 
     const sendChat = (event) => {
         event.preventDefault()
-        if(msg.length > 0) {
+        if (msg.trim().length > 0) {
             handleSendMsg(msg);
             setMsg("")
+            setShowEmojiPicker(false);
         }
-    }
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                emojiRef.current &&
+                !emojiRef.current.contains(event.target)
+            ) {
+                setShowEmojiPicker(false);
+            }
+        };
+
+        const handleEspace = (event) => {
+            if (event.key === 'Escape') {
+                setShowEmojiPicker(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('keydown', handleEscape);
+
+        return () => {
+            document.removeEventListener(
+                'mousedown',
+                handleClickOutside
+            );
+
+            document.removeEventListener(
+                'keydown',
+                handleEscape
+            );
+        };
+    }, []);
 
     return (<>
         <Container>
             <div className="button-container">
-                <div className="emoji">
+                <div className="emoji" ref={emojiRef}>
                     <BsEmojiSmileFill onClick={handleEmojiPickerHideShow} />
-                    {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
+                    {showEmojiPicker && (
+                        <div className='emoji-picker'>
+                            <Picker
+                                onEmojiClick={handleEmojiClick}
+                                theme='dark'
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
-            <form className="input-container" onSubmit={(e)=>sendChat(e)}>
+
+            <form className="input-container" onSubmit={(e) => sendChat(e)}>
                 <input
                     type="text"
                     placeholder="type your message here"
                     value={msg}
-                    onChange={(e)=>setMsg(e.target.value)}
+                    onChange={(e) => setMsg(e.target.value)}
                 />
-                <button className="submit">
+                <button
+                    type="submit"
+                    className="submit"
+                    aria-label="Send message"
+                >
                     <IoMdSend />
                 </button>
             </form>
@@ -76,7 +121,7 @@ const Container = styled.div`
             }
             .EmojiPickerReact {
                 position: absolute;
-                top: -450px;
+                bottom: 3rem;
                 background-color: #080420;
                 box-shadow: 0 5px 10px #9a86f3;
                 border-color: #9186f3;
