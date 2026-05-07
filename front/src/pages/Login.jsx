@@ -27,26 +27,44 @@ function Login() {
         }
     }, [])
     const handleSubmit = async (event) => {
-        event.preventDefault()
-        if (handleValidation()) {
-            // console.log('user', registerRoute)
-            const { username, password } = user
-            const { data } = await axios.post(loginRoute,
-                {
-                    username,
-                    password
-                }).catch(err => console.log(err));
-            if (data.status === false) {
-                toast.error(data.msg, toastifyError)
-            }
-            if (data.status === true) {
-                console.log(data.status)
-                localStorage.setItem("chat-app-user", JSON.stringify(data.user))
-                navigate('/')
-            }
+        event.preventDefault();
+
+        if (!handleValidation()) {
+            return;
         }
 
-    }
+        const { username, password } = user;
+
+        try {
+            const { data } = await axios.post(loginRoute, {
+                username,
+                password,
+            });
+
+            if (data.status === false) {
+                toast.error(data.message, toastifyError);
+                return;
+            }
+
+            if (data.status === true) {
+                localStorage.setItem(
+                    "chat-app-user",
+                    JSON.stringify(data.user)
+                );
+
+                navigate("/");
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            console.error("Backend response:", error.response?.data);
+
+            toast.error(
+                error.response?.data?.message ||
+                "Unable to connect to the server.",
+                toastifyError
+            );
+        }
+    };
     const handleValidation = () => {
         const { username, password } = user
         if (password === "") {
