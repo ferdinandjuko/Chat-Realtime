@@ -37,7 +37,7 @@ export default function ChatInput({ handleSendMsg }) {
             }
         };
 
-        const handleEspace = (event) => {
+        const handleEscape = (event) => {
             if (event.key === 'Escape') {
                 setShowEmojiPicker(false);
             }
