@@ -65,20 +65,18 @@ function Login() {
             );
         }
     };
+
     const handleValidation = () => {
-        const { username, password } = user
-        if (password === "") {
-            toast.error('Email and Password is required', toastifyError)
-            return false
-        } else if (username.length === "") {
-            toast.error('Email and Password is required', toastifyError)
+        const { username, password } = user;
+        if (password === "" || username === "") {
+            toast.error('Username and Password is required', toastifyError)
             return false
         }
         return true
     }
+
     const handleChange = (event) => {
         setUser({ ...user, [event.target.name]: event.target.value })
-        console.log(event.target.value)
     }
     return (<>
         <FormContainer>
@@ -87,7 +85,7 @@ function Login() {
                     <img src={Logo} alt="Logo" />
                 </div>
                 <input type="text" name="username" placeholder='Username' id="" onChange={(e) => handleChange(e)} />
-                <input type="password" name="password" placeholder='Mot de passe' id="" onChange={(e) => handleChange(e)} />
+                <input type="password" name="password" placeholder='Password' id="" onChange={(e) => handleChange(e)} />
                 <button type="submit">Login In</button>
                 <span>Don't have an acount ? <Link to="/register">Register</Link></span>
             </form>
