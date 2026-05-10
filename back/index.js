@@ -72,7 +72,7 @@ io.on("connection", (socket) => {
     if (sendUserSocket) {
       socket
         .to(sendUserSocket)
-        .emit("msg-recieve", data.message);
+        .emit("msg-receive", data.message);
     }
 
   });

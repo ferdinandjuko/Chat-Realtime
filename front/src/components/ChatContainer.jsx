@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Logout from "./Logout";
 import ChatInput from "./ChatInput";
@@ -20,7 +20,7 @@ export default function Welcome({ currentChat, currentUser, socket }) {
             })
             setMessages(chat.data)
         }
-        if(currentChat) {
+        if (currentChat) {
             fetchCurrentChat()
         }
     }, [currentChat])
@@ -31,13 +31,13 @@ export default function Welcome({ currentChat, currentUser, socket }) {
             to: currentChat._id,
             message: msg,
         });
-        
+
         socket.current.emit("send-msg", {
             to: currentChat._id,
             from: currentUser._id,
             message: msg,
         })
-            
+
         console.log(msg)
         const msgs = [...messages]
         msgs.push({ fromSelf: true, message: msg })
@@ -45,9 +45,9 @@ export default function Welcome({ currentChat, currentUser, socket }) {
     }
 
     useEffect(() => {
-        if(socket.current) {   
+        if (socket.current) {
             // alert("socket.current")
-            socket.current.on("msg-recieve", (msg)=> {
+            socket.current.on("msg-receive", (msg) => {
                 console.log(msg)
                 setArrivalMessage({
                     fromSelf: false,
@@ -62,19 +62,19 @@ export default function Welcome({ currentChat, currentUser, socket }) {
     }, [arrivalMessage])
 
     useEffect(() => {
-        scrollRef.current?.scrollIntoView({behavior: "smooth"})
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }, [messages])
 
     return (<>
-        { currentChat && (    
+        {currentChat && (
             <Container>
                 <div className="chat-header">
                     <div className="user-details">
                         <div className="avatar">
-                            <img 
-                                src={`data:image/svg+xml;base64,${currentChat.avatarImage}`} 
-                                alt="" 
-                                />
+                            <img
+                                src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
+                                alt=""
+                            />
                         </div>
                         <div className="username">
                             <h3>{currentChat.username}</h3>
@@ -87,12 +87,12 @@ export default function Welcome({ currentChat, currentUser, socket }) {
                         messages.map((message) => {
                             return (
                                 <div ref={scrollRef} key={uuidv4()}>
-                                    <div className={`message ${message.fromSelf ? "sended" : "recieved"}`}>
+                                    <div className={`message ${message.fromSelf ? "sended" : "received"}`}>
                                         <div className="content">
                                             <p>
                                                 {message.message}
                                             </p>
-                                        
+
                                         </div>
                                     </div>
                                 </div>
@@ -170,7 +170,7 @@ const Container = styled.div`
             background-color: #4f04ff21;
         }
     }
-    .recieved {
+    .received {
         justify-content: flex-start;
         .content {
             background-color: #9900ff20;
