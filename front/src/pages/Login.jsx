@@ -42,7 +42,7 @@ function Login() {
             });
 
             if (data.status === false) {
-                toast.error(data.message, toastifyError);
+                toast.error(data.msg, toastifyError);
                 return;
             }
 
@@ -59,7 +59,7 @@ function Login() {
             console.error("Backend response:", error.response?.data);
 
             toast.error(
-                error.response?.data?.message ||
+                error.response?.data?.msg ||
                 "Unable to connect to the server.",
                 toastifyError
             );
